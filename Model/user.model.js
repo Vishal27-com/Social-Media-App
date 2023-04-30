@@ -5,9 +5,9 @@ const userSchema=new mongoose.Schema({
   password:{type:String,required:true},
   dob: Date,
   bio: String,
-  posts: [{ type: ObjectId, ref: 'Post' }],
-  friends: [{ type: ObjectId, ref: 'User' }],
-  friendRequests: [{ type: ObjectId, ref: 'User' }]
+  posts: [{ type:mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+  friends: [{ type:mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  friendRequests: [{ type:mongoose.Schema.Types.ObjectId, ref: 'User' }]
 },{timestamps:true})
 const User=mongoose.model('user',userSchema)
 module.exports=User;
