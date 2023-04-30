@@ -98,3 +98,118 @@ status   |   string  | yes     | accept or reject.
 status code : 204
 message : Request accepted/rejected
 error: false
+
+### GET `/api/posts`
+#### This endpoint will return all posts.
+### Response 
+status code : 200
+`{
+  "message": [
+    {
+      "_id": "644e12d72b115461576fd1d4",
+      "user": "644d1a382dc0f82745ccb464",
+      "text": "Hey I am Thor. Do you know me?",
+      "image": "https://c4.wallpaperflare.com/wallpaper/375/342/535/thor-chris-hemsworth-men-mjolnir-wallpaper-preview.jpg",
+      "likes": [
+        "644d1a382dc0f82745ccb464"
+      ],
+      "comments": [
+        {
+          "user": "644d1a382dc0f82745ccb464",
+          "text": "Gajab! Tony bhai",
+          "_id": "644e156720dd5fecb4c42a9f"
+        }
+      ],
+      "createdAt": "2023-04-30T07:03:51.375Z",
+      "updatedAt": "2023-04-30T07:14:47.394Z",
+      "__v": 0
+    }
+  ],
+  "error": false
+}`
+
+### POST `/api/posts`
+#### This endpoint will allow user to create a post.
+### Request Parameters
+Name     |   Type    | Require | Description
+---------|-----------|---------|-------------
+user     |   string  | yes     | userId.
+text     |   string  | yes     | post's content.
+image    |   string  | yes     | post's image.
+
+### Response 
+status code : 201
+message : Posted
+error: false
+
+### PATCH `/api/posts/:id`
+#### This endpoint will allow user to update post's content and image.
+### Request Parameters
+Name     |   Type    | Require | Description
+---------|-----------|---------|-------------
+text     |   string  | no      |post's content.
+image    |   string  | no      |post's image.
+
+### Response 
+status code : 204
+message : Updated
+error: false
+### DELETE `/api/posts/:id`
+#### This endpoint will allow user to delete post.
+
+### Response 
+status code : 202
+message : Deleted
+error: false
+
+### POST `/api/posts/:id/like`
+#### This endpoint will allow user to like a specified post.
+### Request Parameters
+Name     |   Type    | Require | Description
+---------|-----------|---------|-------------
+userId   |   string  | yes     | userId.
+
+### Response 
+status code : 201
+message : Liked or Already liked (if already liked)
+error: false
+### POST `/api/posts/:id/comment`
+#### This endpoint will allow user to comment on a specified post.
+### Request Parameters
+Name     |   Type    | Require | Description
+---------|-----------|---------|-------------
+user     |   string  | yes     | userId.
+text     |   string  | yes     | text of comment.
+
+### Response 
+status code : 201
+message : Liked or Already liked (if already liked)
+error: false
+
+### GET `/api/posts/:id`
+#### This endpoint will return post by id.
+### Response 
+status code : 200
+`{
+  "message":{
+      "_id": "644e12d72b115461576fd1d4",
+      "user": "644d1a382dc0f82745ccb464",
+      "text": "Hey I am Thor. Do you know me?",
+      "image": "https://c4.wallpaperflare.com/wallpaper/375/342/535/thor-chris-hemsworth-men-mjolnir-wallpaper-preview.jpg",
+      "likes": [
+        "644d1a382dc0f82745ccb464"
+      ],
+      "comments": [
+        {
+          "user": "644d1a382dc0f82745ccb464",
+          "text": "Gajab! Tony bhai",
+          "_id": "644e156720dd5fecb4c42a9f"
+        }
+      ],
+      "createdAt": "2023-04-30T07:03:51.375Z",
+      "updatedAt": "2023-04-30T07:14:47.394Z",
+      "__v": 0
+    }
+  ],
+  "error": false
+}`
