@@ -99,7 +99,7 @@ status code : 204
 message : Request accepted/rejected
 error: false
 
-## User
+## Post
 
 ### GET `/api/posts`
 #### This endpoint will return all posts.
