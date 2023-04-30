@@ -1,8 +1,16 @@
 const User =require('../Model/user.model')
+const bcrypt = require('bcrypt');
 const registeration =async (req,res)=>{
 try {
-    await User.create(req.body);
-    res.status(201).send({message:'Registered',error:false})
+    const {password,...other}=req.body;
+    const saltRounds = 10;
+    bcrypt.hash(password, saltRounds, async (err, hashed)=> {
+        if(err)res.status(500).send({message:err.message,error:true})
+        else{
+            await User.create({...other,password:hashed});
+            res.status(201).send({message:'Registered',error:false})
+        }
+    });
 } catch (error) {
     res.status(500).send({message:error.message,error:true})
 }
