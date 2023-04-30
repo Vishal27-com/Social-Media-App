@@ -18,7 +18,7 @@ try {
 const updatePost=async (req,res)=>{
 try {
     await Post.updateOne({_id:req.params.id},{$set:req.body})
-    res.status(200).send({message:"Updated",error:false});
+    res.status(204).send({message:"Updated",error:false});
 } catch (error) {
    res.status(500).send({message:error.message,error:true}) 
 }
@@ -26,7 +26,7 @@ try {
 const deletePost=async (req,res)=>{
 try {
     await Post.findByIdAndDelete(req.params.id)
-    res.status(200).send({message:"Deleted",error:false}); 
+    res.status(202).send({message:"Deleted",error:false}); 
 } catch (error) {
    res.status(500).send({message:error.message,error:true}) 
 }
@@ -37,11 +37,11 @@ try {
     const post=await Post.find({_id:req.params.id},{likes:1})
     
     if(post[0].likes.includes(liker)){
-        res.status(200).send({message:"Already Liked",error:false});
+        res.status(201).send({message:"Already Liked",error:false});
     }
     else{
         await Post.updateOne({_id:req.params.id},{$push:{likes:liker}})
-        res.status(200).send({message:"Liked",error:false});
+        res.status(201).send({message:"Liked",error:false});
     }
 } catch (error) {
    res.status(500).send({message:error.message,error:true}) 
