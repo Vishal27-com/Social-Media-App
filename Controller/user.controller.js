@@ -9,7 +9,7 @@ const getAllUser=async(req,res)=>{
 }
 const getFriendsOfUser=async(req,res)=>{
     try {
-       const friends=await User.find({_id:req.params.id},{friends:1})
+       const friends=await User.find({_id:req.params.id},{name:1,friends:1}).populate({path:"friends",select:"name",model:User})
        res.status(200).send({message:friends,error:false}) 
     } catch (error) {
         res.status(500).send({message:error.message,error:true})
@@ -17,10 +17,10 @@ const getFriendsOfUser=async(req,res)=>{
 }
 const sendFriendRequest=async(req,res)=>{
     try {
-        const from=req.body.from;
+        const from=req.body.userId;
         const to=req.params.id;
         await User.updateOne({_id:to},{$push:{friendRequests:from}})
-        res.status(200).send({message:"Request send",error:false})
+        res.status(201).send({message:"Request send",error:false})
     } catch (error) {
         res.status(500).send({message:error.message,error:true})
     }
@@ -32,11 +32,11 @@ const acceptOrRejectRequest=async(req,res)=>{
         if(req.body.status==='accept'){
             await User.updateOne({_id:userId},{$push:{friends:friendId}})
             await User.updateOne({_id:userId},{$pull:{friendRequests:friendId}})
-            res.status(200).send({message:"Request accepted",error:false})
+            res.status(204).send({message:"Request accepted",error:false})
         }
         else{
             await User.updateOne({_id:userId},{$pull:{friendRequests:friendId}})
-            res.status(200).send({message:"Request rejected",error:false})
+            res.status(204).send({message:"Request rejected",error:false})
         }
     } catch (error) {
         res.status(500).send({message:error.message,error:true})
